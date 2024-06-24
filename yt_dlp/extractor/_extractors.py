@@ -308,6 +308,7 @@ from .businessinsider import BusinessInsiderIE
 from .buzzfeed import BuzzFeedIE
 from .byutv import BYUtvIE
 from .c56 import C56IE
+from .cableav import CableAVIE
 from .caffeinetv import CaffeineTVIE
 from .callin import CallinIE
 from .caltrans import CaltransIE
@@ -582,6 +583,7 @@ from .egghead import (
     EggheadLessonIE,
 )
 from .eighttracks import EightTracksIE
+from .einthusan import EinthusanIE
 from .eitb import EitbIE
 from .elementorembed import ElementorEmbedIE
 from .elonet import ElonetIE
@@ -902,6 +904,10 @@ from .iwara import (
 )
 from .ixigua import IxiguaIE
 from .izlesene import IzleseneIE
+from .jable import (
+    JableIE,
+    JablePlaylistIE,
+)
 from .jamendo import (
     JamendoAlbumIE,
     JamendoIE,
@@ -1561,6 +1567,7 @@ from .polskieradio import (
 )
 from .popcorntimes import PopcorntimesIE
 from .popcorntv import PopcornTVIE
+from .porn91 import Porn91IE
 from .pornbox import PornboxIE
 from .pornflip import PornFlipIE
 from .pornhub import (
@@ -2453,6 +2460,7 @@ from .wykop import (
 )
 from .xanimu import XanimuIE
 from .xboxclips import XboxClipsIE
+from .xfileshare import XFileShareIE
 from .xhamster import (
     XHamsterEmbedIE,
     XHamsterIE,
@@ -2516,6 +2524,8 @@ from .youporn import (
     YouPornTagIE,
     YouPornVideosIE,
 )
+from .yourporn import YourPornIE
+from .yourupload import YourUploadIE
 from .zaiko import (
     ZaikoETicketIE,
     ZaikoIE,
