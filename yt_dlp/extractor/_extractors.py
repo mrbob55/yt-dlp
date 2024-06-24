@@ -2287,10 +2287,6 @@ from .uliza import (
 from .umg import UMGDeIE
 from .unistra import UnistraIE
 from .unity import UnityIE
-from .unsupported import (
-    KnownDRMIE,
-    KnownPiracyIE,
-)
 from .uol import UOLIE
 from .uplynk import (
     UplynkIE,
