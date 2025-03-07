@@ -4,6 +4,56 @@ from ..utils import (
     parse_duration,
     urljoin,
 )
+import base64
+import re
+import urllib.parse
+
+
+# This JavaScript code translated to Python below:
+
+# $.each(vidsnfo, function(pid, src) {
+# 	var tmp = src.split("/");
+# 	tmp[1]+= "8" + "/" + boo(ssut51(tmp[6]),ssut51(tmp[7]));
+# 	tmp = preda(tmp);
+# 	var src = tmp.join("/");
+# 	if ($('.combo_mode[data-postid="'+pid+'"]').length) $('.combo_mode[data-postid="'+pid+'"]').attr('data-vidsrc',src);
+# 	if ($('.player_el_nc[data-postid="'+pid+'"]').length) $('.player_el_nc[data-postid="'+pid+'"]').attr('src',src);
+# 	if ($('[itemprop="contentUrl"]').length) $('[itemprop="contentUrl"]').attr('content',src);
+# });
+# function preda(arg){
+# 	arg[5]-= parseInt(ssut51(arg[6]))+parseInt(ssut51(arg[7]));
+# 	return arg;
+# }
+# function ssut51(arg){
+# 	var str = arg.replace(/[^0-9]/g,'');
+# 	var sut = 0;
+# 	for (var i = 0; i < str.length; i++) {
+# 	sut += parseInt(str.charAt(i), 10);
+# 	}
+# 	return sut;
+# }
+# function boo(ss,es){
+# 	var b = btoa(ss + "-" + window.location.host + "-" + es);
+# 	return b.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '.');
+# }
+
+
+def preda(arg):
+    arg[5] = str(int(arg[5]) - (ssut51(arg[6]) + ssut51(arg[7])))
+    return arg
+
+def ssut51(arg):
+    str_val = re.sub(r'[^0-9]', '', arg)
+    sut = 0
+    for char in str_val:
+        sut += int(char)
+    return sut
+
+def boo(ss, es, host):
+    combined_string = f"{ss}-{host}-{es}"
+    encoded_bytes = base64.b64encode(combined_string.encode('utf-8'))
+    encoded_string = encoded_bytes.decode('utf-8')
+    return encoded_string.replace('+', '-').replace('/', '_').replace('=', '.')
 
 
 class YourPornIE(InfoExtractor):
@@ -38,13 +88,9 @@ class YourPornIE(InfoExtractor):
                 group='data'),
             video_id)[video_id].split('/')
 
-        num = 0
-        for c in parts[6] + parts[7]:
-            if c.isnumeric():
-                num += int(c)
-        parts[5] = compat_str(int(parts[5]) - num)
-        parts[1] += '8'
-        video_url = urljoin(url, '/'.join(parts))
+        hostname = urllib.parse.urlparse(url).hostname
+        parts[1] += "8" + "/" + boo(ssut51(parts[6]), ssut51(parts[7]), hostname)
+        video_url = urljoin(url, '/'.join(preda(parts)))
 
         title = (self._search_regex(
             r'<[^>]+\bclass=["\']PostEditTA[^>]+>([^<]+)', webpage, 'title',
