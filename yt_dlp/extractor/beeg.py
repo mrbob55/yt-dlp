@@ -79,11 +79,12 @@ class BeegIE(InfoExtractor):
         return {
             'id': video_id,
             'display_id': str_or_none(first_fact.get('id')),
-            'title': traverse_obj(video, ('file', 'stuff', 'sf_name')),
-            'description': traverse_obj(video, ('file', 'stuff', 'sf_story')),
+            'title': traverse_obj(video, ('file', 'data', lambda _, v: v['cd_column'] == 'sf_name', 'cd_value'), get_all=False),
+            'description': traverse_obj(video, ('file', 'data', lambda _, v: v['cd_column'] == 'sf_story', 'cd_value'), get_all=False),
             'timestamp': unified_timestamp(first_fact.get('fc_created')),
             'duration': int_or_none(traverse_obj(video, ('file', 'fl_duration'))),
             'tags': traverse_obj(video, ('tags', ..., 'tg_name')),
+            'thumbnail': 'https://thumbs.externulls.com/videos/%s/0.webp?size=480x270' % (traverse_obj(video, ('file', 'id'))),
             'formats': formats,
             'age_limit': self._rta_search(webpage),
         }
