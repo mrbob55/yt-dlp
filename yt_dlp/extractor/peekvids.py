@@ -22,7 +22,7 @@ class PeekVidsBaseIE(InfoExtractor):
         title = self._html_search_regex(r'(?s)<h1\b[^>]*>(.+?)</h1>', webpage, 'title')
 
         display_id = video_id
-        video_id = self._search_regex(r'(?s)<video\b[^>]+\bdata-id\s*=\s*["\']?([\w-]+)', webpage, 'short video ID')
+        video_id = self._search_regex(r'(?s)<div\b[^>]+\bdata-id\s*=\s*["\']?([\w-]+)', webpage, 'video ID')
         srcs = self._download_json(
             f'https://www.{domain}/v-alt/{video_id}', video_id,
             note='Downloading list of source files')
